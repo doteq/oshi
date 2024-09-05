@@ -50,6 +50,9 @@ class AppCenter {
   }
 
   static Future<({bool result, Uri download})> checkForUpdates() async {
+    if (Share.session.settings.enableUpdateChecking) {
+      return (result: false, download: Uri());
+    }
     try {
       var result = (await fetchVersions())!;
       var checkResult = (result: result.version > Version.parse(Share.buildNumber), download: result.download);

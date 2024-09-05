@@ -534,10 +534,8 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                                               title: '8028B071-6B39-40E2-AE3C-925D555E4696'.localized,
                                               helper: '808B9438-3098-4218-A0F7-EA4424345D2F'.localized,
                                               value: true,
-                                              onChanged: <T>(s) => NotificationController.sendNotification(
-                                                  title: 'BAFBD98F-2A00-4F6E-8477-1835B9719705'.localized,
-                                                  content: '5D3C9F9D-00DD-4B39-AF4B-629EC7D203A7'.localized,
-                                                  category: NotificationCategories.other)),
+                                              onChanged: <T>(s) => Share.session.settings.enableUpdateChecking
+                                            ),
                                         ]),
                                     CardContainer(
                                         margin: EdgeInsets.symmetric(

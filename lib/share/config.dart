@@ -83,6 +83,7 @@ class SessionConfig with ChangeNotifier {
     bool? enableAttendanceNotifications,
     bool? enableAnnouncementsNotifications,
     bool? enableMessagesNotifications,
+    bool? enableUpdateChecking,
     String? userAvatarImage,
     bool? enableBackgroundSync,
     bool? backgroundSyncWiFiOnly,
@@ -107,6 +108,7 @@ class SessionConfig with ChangeNotifier {
         _enableAttendanceNotifications = enableAttendanceNotifications ?? true,
         _enableAnnouncementsNotifications = enableAnnouncementsNotifications ?? true,
         _enableMessagesNotifications = enableMessagesNotifications ?? true,
+        _enableUpdateChecking = enableUpdateChecking ?? true,
         _userAvatarImage = userAvatarImage ?? '',
         _enableBackgroundSync = enableBackgroundSync ?? true,
         _backgroundSyncWiFiOnly = backgroundSyncWiFiOnly ?? false,
@@ -188,6 +190,9 @@ class SessionConfig with ChangeNotifier {
   @HiveField(24, defaultValue: true)
   bool _shareEventsByDefault;
 
+  @HiveField(19, defaultValue: true)
+  bool _enableUpdateChecking;
+
   @JsonKey(includeToJson: false, includeFromJson: false)
   Map<String, double> get customGradeValues => _customGradeValues;
 
@@ -247,6 +252,9 @@ class SessionConfig with ChangeNotifier {
 
   @JsonKey(includeToJson: false, includeFromJson: false)
   bool get enableMessagesNotifications => _enableMessagesNotifications;
+
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  bool get enableUpdateChecking=> _enableUpdateChecking;
 
   @JsonKey(includeToJson: false, includeFromJson: false)
   Uint8List? get userAvatar {
@@ -391,6 +399,12 @@ class SessionConfig with ChangeNotifier {
 
   set enableMessagesNotifications(bool value) {
     _enableMessagesNotifications = value;
+    notifyListeners();
+    Share.settings.save();
+  }
+
+  set enableUpdateChecking(bool value) {
+    _enableUpdateChecking = value;
     notifyListeners();
     Share.settings.save();
   }
